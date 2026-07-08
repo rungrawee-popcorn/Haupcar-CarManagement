@@ -29,3 +29,10 @@ export const updateCar = async (id, carData) => {
 
   return response.data;
 };
+
+// Delete car
+export const deleteCar = async (id) => {
+  const response = await axios.delete(`${API_URL}/${id}`);
+
+  return response.data;
+};

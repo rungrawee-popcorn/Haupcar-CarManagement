@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CarTable from "../components/CarTable";
 import Pagination from "../components/Pagination";
 
-import { getCars } from "../services/carService";
+import { getCars, deleteCar } from "../services/carService";
 
 function CarList() {
   // Store car data
@@ -38,6 +38,31 @@ function CarList() {
 
     fetchCars();
   }, []);
+
+  // Delete car
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this car?",
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      await deleteCar(id);
+
+      alert("Car deleted successfully");
+
+      const data = await getCars();
+
+      setCars(data);
+    } catch (error) {
+      console.error(error);
+
+      alert("Failed to delete car");
+    }
+  };
 
   // Pagination calculation
   const totalPages = Math.ceil(cars.length / pageSize);
@@ -81,7 +106,7 @@ function CarList() {
                 <div className="alert alert-warning">No cars found.</div>
               ) : (
                 <>
-                  <CarTable cars={currentCars} />
+                  <CarTable cars={currentCars} onDelete={handleDelete} />
 
                   <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
                     <small className="text-muted">

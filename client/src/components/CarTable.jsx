@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function CarTable({ cars }) {
+function CarTable({ cars, onDelete }) {
   const navigate = useNavigate();
 
   return (
@@ -47,7 +47,10 @@ function CarTable({ cars }) {
                   Edit
                 </button>
 
-                <button className="btn btn-danger btn-sm" disabled>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => onDelete(car.CarId)}
+                >
                   Delete
                 </button>
               </td>
