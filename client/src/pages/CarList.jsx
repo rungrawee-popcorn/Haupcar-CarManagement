@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import CarTable from "../components/CarTable";
 import Pagination from "../components/Pagination";
@@ -15,13 +16,18 @@ function CarList() {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Page size
   const pageSize = 10;
+
+  // Navigate between pages
+  const navigate = useNavigate();
 
   // Load data
   useEffect(() => {
     const fetchCars = async () => {
       try {
         const data = await getCars();
+
         setCars(data);
       } catch (error) {
         console.error(error);
@@ -55,7 +61,10 @@ function CarList() {
                   <small className="text-muted">Manage company vehicles</small>
                 </div>
 
-                <button className="btn btn-primary" disabled>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => navigate("/cars/add")}
+                >
                   + Add Car
                 </button>
               </div>
@@ -64,7 +73,7 @@ function CarList() {
             <div className="card-body">
               {loading ? (
                 <div className="text-center py-5">
-                  <div className="spinner-border text-primary" />
+                  <div className="spinner-border text-primary" role="status" />
 
                   <p className="mt-3">Loading cars...</p>
                 </div>

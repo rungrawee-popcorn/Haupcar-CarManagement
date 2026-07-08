@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 function CarTable({ cars }) {
+  const navigate = useNavigate();
+
   return (
     <div className="table-responsive">
       <table className="table table-hover table-bordered align-middle mb-0">
@@ -36,7 +40,10 @@ function CarTable({ cars }) {
               <td>{car.Note || "-"}</td>
 
               <td className="text-center">
-                <button className="btn btn-warning btn-sm me-2" disabled>
+                <button
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => navigate(`/cars/edit/${car.CarId}`)}
+                >
                   Edit
                 </button>
 
